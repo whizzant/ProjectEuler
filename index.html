@@ -32,6 +32,32 @@
             h1 {/*color:#bf3211;*/}
 
 
+            #problemLinks {
+                width: 225px;
+                border: 1px solid red;
+                overflow-wrap: normal;
+
+            }
+
+            #problemLinks a {
+                background-color: #6b4e3d;
+                font-size: 100%;
+                border-top: solid 1px #ddd;
+                border-bottom: solid 1px #aaa;
+                border-left: solid 1px #ddd;
+                border-right: solid 1px #aaa;
+                padding: 10px 15px 10px 15px;
+                margin: 5px;
+                display: inline-block;
+                color:white;
+            }
+
+            #problemLinks a.active, #problemLinks a:hover {
+                background-color: #f0efd1;
+                color: #6b4e3d;
+            }
+
+
             #links {
                 padding:0;
                 margin: 0 auto;
@@ -90,8 +116,8 @@
         <!-- Add your site or application content here -->
         <h1>Project Euler</h1>
 
-        <div id="links">
-            Problems:
+        <div id="problemLinks">
+            <div>Problems:</div>
         </div>
 
         <div id="content">
@@ -114,6 +140,8 @@
 
         <script>
             var currentProblem = 5;
+            var currentProblemEL = null;
+
 
             function Euler(problem) {
                 document.getElementById("title").innerHTML = problem.title;
@@ -124,9 +152,9 @@
                 document.getElementById("answer").innerHTML = problem.answer();
                 var t1 = performance.now();
 
-                //document.getElementById("perf").innerHTML = "Perf: " + (t1 - t0).toFixed(4) + " ms";
+                document.getElementById("perf").innerHTML = "Perf: " + (t1 - t0).toFixed(4) + " ms";
                 //document.getElementById("perf").innerHTML = window["problems"]["problems"][0].title;
-                document.getElementById("perf").innerHTML = window["problems"].title;
+                //document.getElementById("perf").innerHTML = window["problems"].title;
             }
 
             function downScripts(problem) {
@@ -143,6 +171,14 @@
                 }
             }
 
+            function problemLinkClicked(el, problem) {
+                currentProblemEL.className = "";
+                currentProblemEL = el;
+                alert(el.className);
+                currentProblemEL.className = "active";
+
+                downScripts(problem);
+            }
 
             var template = {
                 title:"title",
@@ -155,11 +191,19 @@
             window.onload = function() {
                 downScripts("p" + currentProblem);
 
-                var plnk = document.getElementById("links");
+
+                //Create the links to the problems
+                var plnk = document.getElementById("problemLinks");
                 for(i=1;i<=currentProblem;i++) {
                     var lnk = document.createElement("a");
                     lnk.href = 'javascript:downScripts("p' + i + '");';
+                    //lnk.href = "#";
+                    //lnk.onClick = 'problemLinkClicked(this, "p' + i + '");
                     lnk.innerHTML = i;
+                    //if(i==5) {
+                    //    lnk.className = "active";
+                    //}
+                    currentProblemEL = lnk;
                     plnk.appendChild(lnk);
                 }
             }
