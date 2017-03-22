@@ -4,24 +4,16 @@ var p4 = {
     answer: function() {
         var value = 0;
 
-        for(i=99; i>0; i++) {
-            for(j=98; j>0; j++) {
-                var p = i*j;
-                var ps = p.toString().split("");
-                var l =  ps.length;
-                if(l%2 == 0) {
-                    var p1 = p.toString().substr(0, l/2);
-                    var p2 = p.toString().substr((l/2));
-                    var p3 = p2.split("");
-                    p3.reverse();
-                    var p4 = p3.join("");
+        for(i=999; i>99; i--) {
+            for(j=999; j>99; j--) {
+                var p1 = i*j;
+                if(p1 < value) continue;
 
-                    if(Number(p1) == Number(p4)) value = p;
+                var p2 = p1.toString().split("").reverse().join("");
+                if(String(p1) == String(p2)) {
+                    if(p1 > value) value = p1;
                 }
-
-                if(value > 0) break;
             }
-            if(value > 0) break;
         }
 
         return value;

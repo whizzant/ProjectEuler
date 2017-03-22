@@ -74,6 +74,9 @@
                 font-weight: bold;
             }
 
+            #answerGroup #perf {
+                float: right;
+            }
             #answer {}
 
 
@@ -98,8 +101,10 @@
             <div id="answerGroup">
                 <a class="answerToggle" href="javascript:void(0)">Answer:</a>
                 <span id="answer"></span>
+                <span id="perf"></span>
             </div>
         </div>
+
 
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
@@ -107,13 +112,19 @@
         <script src="js/main.js"></script>
 
         <script>
-            var currentProblem = 4;
+            var currentProblem = 5;
 
             function Euler(problem) {
                 document.getElementById("title").innerHTML = problem.title;
                 document.getElementById("desc").innerHTML = problem.desc;
                 document.getElementById("code").innerHTML = String(problem.answer);
+
+                var t0 = performance.now();
                 document.getElementById("answer").innerHTML = problem.answer();
+                var t1 = performance.now();
+
+
+                document.getElementById("perf").innerHTML = "Perf: " + (t1 - t0).toFixed(4) + " ms";
             }
 
             function downScripts(problem) {
@@ -128,9 +139,8 @@
                 } else {
                     Euler(window[problem]);
                 }
-
-
             }
+
 
             var template = {
                 title:"title",
