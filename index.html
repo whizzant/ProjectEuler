@@ -13,6 +13,71 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+        <style type="text/css">
+            body {
+                font-family: "Segoe UI", Segoe, Tahoma, Geneva, sans-serif;
+                margin: 0 auto;
+                max-width: 1000px;
+                background-color: #f0efd1;
+            }
+
+            body a {
+                padding:0;
+                margin: 0 auto;
+                color:#6b4e3d;
+                text-decoration: none;
+            }
+
+            h1 {/*color:#bf3211;*/}
+
+
+            #links {
+                padding:0;
+                margin: 0 auto;
+                font-size: 125%;
+                color:#6b4e3d;
+            }
+
+            #links a {
+                padding:5px;
+                text-decoration: none;
+                color:#6b4e3d;
+            }
+
+            #links a:hover {
+                background-color: #6b4e3d;
+                color: white;
+            }
+
+            #content {
+                margin: 0 auto;
+                max-width: 1000px;
+            }
+            #title {
+                margin: 0;
+                font-family: Arial,helvetic,sans-serif;
+                color: #6b4e3d;
+            }
+            #desc, #code {
+                background-color: #fff;
+                font-size: 100%;
+                border-top: solid 1px #ddd;
+                border-bottom: solid 1px #aaa;
+                border-left: solid 1px #ddd;
+                border-right: solid 1px #aaa;
+                padding: 10px;
+            }
+
+
+            #answerGroup {
+                font-weight: bold;
+            }
+
+            #answer {}
+
+
+        </style>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -20,21 +85,84 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <h1>Project Euler</h1>
+
+        <div id="links">
+            Problems:
+        </div>
+
+        <div id="content">
+            <h1 id="title">Title</h1>
+            <h2 id="desc">Description</h2>
+            <pre id="code"></pre>
+            <div id="answerGroup">
+                <a class="answerToggle" href="javascript:void(0)">Answer:</a>
+                <span id="answer"></span>
+            </div>
+        </div>
 
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
+        <script>
+            var currentProblem = 4;
+
+            function Euler(problem) {
+                document.getElementById("title").innerHTML = problem.title;
+                document.getElementById("desc").innerHTML = problem.desc;
+                document.getElementById("code").innerHTML = String(problem.answer);
+                document.getElementById("answer").innerHTML = problem.answer();
+            }
+
+            function downScripts(problem) {
+                if(window[problem] == undefined) {
+                    var element = document.createElement("script");
+                    element.src = "solutions/" + problem.toString() + ".js";
+                    element.onload = function() {
+                        Euler(window[problem]);
+                    };
+                    element.onerror = function() {};
+                    document.body.appendChild(element);
+                } else {
+                    Euler(window[problem]);
+                }
+
+
+            }
+
+            var template = {
+                title:"title",
+                desc:"desc",
+                answer: function() {
+                }
+            };
+
+
+            window.onload = function() {
+                downScripts("p" + currentProblem);
+
+                var plnk = document.getElementById("links");
+                for(i=1;i<=currentProblem;i++) {
+                    var lnk = document.createElement("a");
+                    lnk.href = 'javascript:downScripts("p' + i + '");';
+                    lnk.innerHTML = i;
+                    plnk.appendChild(lnk);
+                }
+            }
+        </script>
+
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
+            /*
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
             e=o.createElement(i);r=o.getElementsByTagName(i)[0];
             e.src='https://www.google-analytics.com/analytics.js';
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
             ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+            */
         </script>
     </body>
 </html>
