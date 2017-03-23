@@ -12,7 +12,9 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <!--
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+        -->
 
         <style type="text/css">
             body {
@@ -30,13 +32,14 @@
             }
 
             h1 {/*color:#bf3211;*/}
+            h1, h2, h3 {color: #1b1b1b;}
+
 
 
             #problemLinks {
-                width: 225px;
-                border: 1px solid red;
                 overflow-wrap: normal;
-
+                position: absolute;
+                bottom: 25px;
             }
 
             #problemLinks a {
@@ -80,11 +83,7 @@
                 margin: 0 auto;
                 max-width: 1000px;
             }
-            #title {
-                margin: 0;
-                font-family: Arial,helvetic,sans-serif;
-                color: #6b4e3d;
-            }
+
             #desc, #code {
                 background-color: #fff;
                 font-size: 100%;
@@ -96,16 +95,10 @@
             }
 
 
-            #answerGroup {
-                font-weight: bold;
-            }
-
-            #answerGroup #perf {
-                float: right;
-            }
-            #answer {}
-
-
+            #results {font-weight: bold;}
+            #results h3 {display: inline;}
+            #results #answer {}
+            #results #performance {float: right;}
         </style>
     </head>
     <body>
@@ -114,32 +107,43 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <h1>Project Euler</h1>
-
-        <div id="problemLinks">
-            <div>Problems:</div>
-        </div>
+        <h1>Project Euler Workshop</h1>
 
         <div id="content">
-            <h1 id="title">Title</h1>
-            <h2 id="desc">Description</h2>
+            <h2 id="title">Title</h2>
+            <div id="desc">Description</div>
             <pre id="code"></pre>
-            <div id="answerGroup">
-                <a class="answerToggle" href="javascript:void(0)">Answer:</a>
+            <div id="results">
+                <h3>Answer:</h3>
                 <span id="answer"></span>
-                <span id="perf"></span>
+                <span id="performance">
+                    <h3>Perf:</h3>
+                    <span id="performanceResults"></span>
+                </span>
+            </div>
+            <div id="problemLinks">
+                <h2>Problems:</h2>
             </div>
         </div>
 
 
+
+<!--
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
-        <script src="solutions/p.js"></script>
-
+-->
         <script>
-            var currentProblem = 5;
+            /*
+             var template = {
+             title:"title",
+             desc:"desc",
+             answer: function() {
+             }
+             };
+             */
+            var currentProblem = 7;
             var currentProblemEL = null;
 
 
@@ -152,9 +156,7 @@
                 document.getElementById("answer").innerHTML = problem.answer();
                 var t1 = performance.now();
 
-                document.getElementById("perf").innerHTML = "Perf: " + (t1 - t0).toFixed(4) + " ms";
-                //document.getElementById("perf").innerHTML = window["problems"]["problems"][0].title;
-                //document.getElementById("perf").innerHTML = window["problems"].title;
+                document.getElementById("performanceResults").innerHTML = (t1 - t0).toFixed(4) + " ms";
             }
 
             function downScripts(problem) {
@@ -171,21 +173,17 @@
                 }
             }
 
-            function problemLinkClicked(el, problem) {
+            function problemLinkClicked(el) {
+                alert(el.id);
                 currentProblemEL.className = "";
                 currentProblemEL = el;
-                alert(el.className);
-                currentProblemEL.className = "active";
+                //alert(el.className);
+                el.className = "active";
 
-                downScripts(problem);
+                //downScripts(problem);
             }
 
-            var template = {
-                title:"title",
-                desc:"desc",
-                answer: function() {
-                }
-            };
+
 
 
             window.onload = function() {
@@ -196,14 +194,26 @@
                 var plnk = document.getElementById("problemLinks");
                 for(i=1;i<=currentProblem;i++) {
                     var lnk = document.createElement("a");
+                    //lnk.id = "p" + i;
+                    //lnk.addEventListener("click", function(){
+                        //problemLinkClicked(this);
+                        //alert(currentProblemEL);
+                        //currentProblemEL.className = "";
+                        //currentProblemEL = this;
+                        //currentProblemEL.className = "active";
+
+                        //this.className = "active";
+                        //alert (this.id);
+                        //problemLinkClicked(this);
+                        //problemLinkClicked(this, "p" + i);
+                        //alert(this.id);
+                        //downScripts(this.id);
+                    //});
                     lnk.href = 'javascript:downScripts("p' + i + '");';
+                    //lnk.href = "javascript:void(0);";
                     //lnk.href = "#";
                     //lnk.onClick = 'problemLinkClicked(this, "p' + i + '");
                     lnk.innerHTML = i;
-                    //if(i==5) {
-                    //    lnk.className = "active";
-                    //}
-                    currentProblemEL = lnk;
                     plnk.appendChild(lnk);
                 }
             }
