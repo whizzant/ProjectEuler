@@ -4,8 +4,8 @@ var p4 = {
     answer: function() {
         var value = 0;
 
-        for(i=999; i>99; i--) {
-            for(j=999; j>99; j--) {
+        for(var i=999; i>99; i--) {
+            for(var j=999; j>99; j--) {
                 var p1 = i*j;
                 if(p1 < value) continue;
 

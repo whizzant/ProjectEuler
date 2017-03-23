@@ -7,7 +7,7 @@ var p5 = {
 
 
         do {
-            for(i=20;i>0;i--) {
+            for(var i=20;i>0;i--) {
                 if(counter%i == 0) {
                     value = counter;
                 } else {

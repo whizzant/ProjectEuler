@@ -13,7 +13,7 @@ var p6 = {
         var s1 = 0;
         var s2 = 0;
 
-        for(i=1; i<=100; i++) {
+        for(var i=1; i<=100; i++) {
             s1 += Math.pow(i, 2);
             s2 += i;
         }

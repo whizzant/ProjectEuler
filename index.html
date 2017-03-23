@@ -38,7 +38,7 @@
 
             #problemLinks {
                 overflow-wrap: normal;
-                position: absolute;
+                position: relative;
                 bottom: 25px;
             }
 
@@ -192,7 +192,7 @@
 
                 //Create the links to the problems
                 var plnk = document.getElementById("problemLinks");
-                for(i=1;i<=currentProblem;i++) {
+                for(var i=1;i<=currentProblem;i++) {
                     var lnk = document.createElement("a");
                     //lnk.id = "p" + i;
                     //lnk.addEventListener("click", function(){

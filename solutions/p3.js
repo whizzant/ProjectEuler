@@ -5,7 +5,7 @@ var p3 = {
         var target = 600851475143;
         var primes = this.GetPrimeNumbers();
         var l = primes.length-1;
-        for(i=l; i>-1; i--) {
+        for(var i=l; i>-1; i--) {
             if(target%primes[i] == 0) return primes[i];
         }
     },
