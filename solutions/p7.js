@@ -4,76 +4,38 @@ var p7 = {
         + '<br />'
         + 'What is the 10,001st prime number?',
     answer: function() {
-        var arr = [];
-
-        var l = 79;
-        var u = 100;
-
-
-/*
         var bigListOfPrimes = [];
-
-
+        var numberOfPrimesToFind = 10001;
+        var numberToTest = 2;
 
         do {
-            var arr = [];
-            for(var i=l; i<=u; i++) {
-                arr[i] = true;
+            if((numberToTest == 2) || (numberToTest == 5)) {
+                bigListOfPrimes.push(numberToTest);
+                numberToTest++;
+                continue;
             }
-            arr = this.SieveOfEratosthenes(arr, 2);
 
-            for(i=0;i<arr.length;i++) {
-                if(arr[i]) {
-                    bigListOfPrimes.push(i);
-                    l = i;
+            if((numberToTest%2 == 0) || (numberToTest%5 == 0)) {
+                numberToTest++;
+                continue;
+            }
+
+            var isPrime = true;
+
+            var sqrt = Math.ceil(Math.sqrt(numberToTest));
+            for(var i=2; i<=sqrt; i++) {
+                if(numberToTest%i == 0) {
+                    isPrime = false;
+                    break;
                 }
             }
-            u = l*2;
 
+            if(isPrime) bigListOfPrimes.push(numberToTest);
 
-        } while(bigListOfPrimes.length < 10);
-*/
+            numberToTest++;
 
+        } while(bigListOfPrimes.length < numberOfPrimesToFind)
 
-        for(var i=0; i<=u; i++) {
-            arr[i] = true;
-        }
-
-        arr = this.SieveOfEratosthenes(arr, 2);
-
-
-        var v = "<br />";
-        for(var i=1; i<=arr.length; i++) {
-            if(arr[i]) v += ', ' + i;
-        }
-
-        return v;
-        //return arr[10001];
-    },
-
-    SieveOfEratosthenes: function(listOfPrimeNumbers, startingNumber) {
-        var l = listOfPrimeNumbers.length;
-
-        for(i=startingNumber;i<=l; i+=startingNumber) {
-            if(i<=startingNumber) continue;
-            listOfPrimeNumbers[i] = false;
-        }
-
-        for(i=startingNumber+1;i<=l; i++) {
-            if(listOfPrimeNumbers[i]) {
-                startingNumber = i;
-                break;
-            } else {
-                startingNumber = 0;
-            }
-        }
-
-        var newListOfPrimeNumbers = listOfPrimeNumbers;
-        if(startingNumber > 0) {
-            if(startingNumber <= l) {
-                newListOfPrimeNumbers = this.SieveOfEratosthenes(listOfPrimeNumbers, startingNumber);
-            }
-        }
-        return newListOfPrimeNumbers;
+        return bigListOfPrimes[numberOfPrimesToFind-1]; //104743
     }
 };
