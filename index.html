@@ -94,6 +94,14 @@
                 padding: 10px;
             }
 
+            #code {
+                white-space: pre-wrap;       /* Since CSS 2.1 */
+                white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+                white-space: -pre-wrap;      /* Opera 4-6 */
+                white-space: -o-pre-wrap;    /* Opera 7 */
+                word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            }
+
 
             #results {font-weight: bold;}
             #results h3 {display: inline;}
@@ -127,7 +135,7 @@
         </div>
 
 
-
+        <script src="solutions/misc.js"></script>
 <!--
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
@@ -143,14 +151,13 @@
              }
              };
              */
-            var currentProblem = 9;
-            var currentProblemEL = null;
+            var currentProblem = 11;
 
 
             function Euler(problem) {
                 document.getElementById("title").innerHTML = problem.title;
                 document.getElementById("desc").innerHTML = problem.desc;
-                document.getElementById("code").innerHTML = String(problem.answer);
+                document.getElementById("code").innerText = String(problem.answer);
 
                 var t0 = performance.now();
                 document.getElementById("answer").innerHTML = problem.answer();
@@ -174,45 +181,28 @@
             }
 
             function problemLinkClicked(el) {
-                alert(el.id);
-                currentProblemEL.className = "";
-                currentProblemEL = el;
-                //alert(el.className);
+                var links = document.getElementById('problemLinks').getElementsByTagName('a');
+                var linksLength = links.length;
+                for(var i=0; i<linksLength; i++) {
+                    links[i].className = "";
+                }
                 el.className = "active";
-
-                //downScripts(problem);
             }
-
 
 
 
             window.onload = function() {
                 downScripts("p" + currentProblem);
 
-
                 //Create the links to the problems
                 var plnk = document.getElementById("problemLinks");
                 for(var i=1;i<=currentProblem;i++) {
                     var lnk = document.createElement("a");
-                    //lnk.id = "p" + i;
-                    //lnk.addEventListener("click", function(){
-                        //problemLinkClicked(this);
-                        //alert(currentProblemEL);
-                        //currentProblemEL.className = "";
-                        //currentProblemEL = this;
-                        //currentProblemEL.className = "active";
-
-                        //this.className = "active";
-                        //alert (this.id);
-                        //problemLinkClicked(this);
-                        //problemLinkClicked(this, "p" + i);
-                        //alert(this.id);
-                        //downScripts(this.id);
-                    //});
+                     lnk.addEventListener("click", function(){
+                        problemLinkClicked(this);
+                    });
+                    if(i == currentProblem) lnk.className = "active";
                     lnk.href = 'javascript:downScripts("p' + i + '");';
-                    //lnk.href = "javascript:void(0);";
-                    //lnk.href = "#";
-                    //lnk.onClick = 'problemLinkClicked(this, "p' + i + '");
                     lnk.innerHTML = i;
                     plnk.appendChild(lnk);
                 }
