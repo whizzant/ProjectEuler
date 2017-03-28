@@ -32,26 +32,48 @@ var p11 = {
         var matrix = data.split(" ");
         var matrixLength = matrix.length;
 
-        var startIdx = 0; //16 = last number when forward looking
+        var value = 0;
 
-        //if(startIdx%17 != 0) result
+        for(var i=0; i<matrixLength-1; i++) {
 
-        var h = [];
-        var v = [];
-        var dp = [];
-        var db = [];
-        for(var i=0; i<=3; i++) {
-            h = matrix.slice(startIdx,startIdx+4);  //horizontal = i + 4
-            v.push(matrix[startIdx + (i *20)]);     //vertical = i + 20 + 20 + 20
-            dp.push(matrix[startIdx + (i *21)]);    //diagonal+ = i + 21 + 21 + 21
-            db.push(matrix[startIdx - (i*21)]);     //diagonal- = i - 21 - 21 - 21
+            var startIdx = i; //16 = last number when forward looking
+            var x = 0;
+
+
+            var h = [];
+            if (Math.ceil(startIdx / 19) == Math.ceil((startIdx + 3) / 19)) {
+                h = matrix.slice(startIdx, startIdx + 4);  //horizontal = j + 4
+            }
+            x = h.reduce(this.ProductOfArray);
+            //if(x > value) value = x;
+
+
+
+            var v = [];
+            var dp = [];
+            var db = [];
+            for (var j = 0; j <= 3; j++) {
+
+                v.push(matrix[startIdx + (j * 20)]);     //vertical = j + 20 + 20 + 20
+                //x = v.reduce(this.ProductOfArray);
+                //if(x > value) value = x;
+
+                dp.push(matrix[startIdx + (j * 21)]);    //diagonal+ = j + 21 + 21 + 21
+                //x = dp.reduce(this.ProductOfArray);
+                //if(x > value) value = x;
+
+                db.push(matrix[startIdx - (j * 21)]);     //diagonal- = j - 21 - 21 - 21
+                //x = db.reduce(this.ProductOfArray);
+                //if(x > value) value = x;
+
+            }
         }
 
-        result = h.reduce(this.Sum);
+        result = value; //v.reduce(this.ProductOfArray);
 
         return result;
     },
-    Sum: function(total, num) {
-        return Number(total) + Number(num);
+    ProductOfArray: function(total, num) {
+        return Number(total) * Number(num);
     }
 };
