@@ -7,6 +7,8 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
 
@@ -20,7 +22,7 @@
             body {
                 font-family: "Segoe UI", Segoe, Tahoma, Geneva, sans-serif;
                 margin: 0 auto;
-                max-width: 1000px;
+                max-width: 95%;
                 background-color: #f0efd1;
             }
 
@@ -35,12 +37,22 @@
             h1, h2, h3 {color: #1b1b1b;}
 
 
+            #problemDefinition, #problemSolution {
+                float:left;
+                width:45%;
+            }
+
+            #problemDefinition #desc, #problemSolution pre {
+                margin-right: 20px;
+            }
+
+            #problemSolution pre {
+                font-family: 'Inconsolata', monospace;
+                max-height: 650px;
+            }
 
             #problemLinks {
                 overflow-wrap: normal;
-                position: absolute;
-                right:0px; top:0px;
-                width:300px;
             }
 
             #problemLinks a {
@@ -61,14 +73,6 @@
                 color: #6b4e3d;
             }
 
-
-            #links {
-                padding:0;
-                margin: 0 auto;
-                font-size: 125%;
-                color:#6b4e3d;
-            }
-
             #links a {
                 padding:5px;
                 text-decoration: none;
@@ -78,11 +82,6 @@
             #links a:hover {
                 background-color: #6b4e3d;
                 color: white;
-            }
-
-            #content {
-                margin: 0 auto;
-                max-width: 1000px;
             }
 
             #desc, #code {
@@ -101,13 +100,8 @@
                 white-space: -pre-wrap;      /* Opera 4-6 */
                 white-space: -o-pre-wrap;    /* Opera 7 */
                 word-wrap: break-word;       /* Internet Explorer 5.5+ */
+                font-size: 9pt;
             }
-
-
-            #results {font-weight: bold;}
-            #results h3 {display: inline;}
-            #results #answer {}
-            #results #performance {float: right;}
         </style>
     </head>
     <body>
@@ -118,22 +112,20 @@
         <!-- Add your site or application content here -->
         <h1>Project Euler Workshop</h1>
 
-        <div id="content">
+        <div id="problemLinks"></div>
+
+        <div id="problemDefinition">
             <h2 id="title">Title</h2>
             <div id="desc">Description</div>
-            <pre id="code"></pre>
-            <div id="results">
-                <h3>Answer:</h3>
-                <span id="answer"></span>
-                <span id="performance">
-                    <h3>Perf:</h3>
-                    <span id="performanceResults"></span>
-                </span>
-            </div>
-            <div id="problemLinks">
-                <h2>Problems:</h2>
-            </div>
         </div>
+        <div id="problemSolution">
+            <h2 id="answer">Solution:</h2>
+            <pre id="code"></pre>
+            <h3 id="performanceResults">Performance:</h3>
+        </div>
+
+
+
 
 
         <script src="solutions/misc.js"></script>
@@ -161,10 +153,10 @@
                 document.getElementById("code").innerText = String(problem.answer);
 
                 var t0 = performance.now();
-                document.getElementById("answer").innerHTML = problem.answer();
+                document.getElementById("answer").innerHTML = "Solution: " + problem.answer();
                 var t1 = performance.now();
 
-                document.getElementById("performanceResults").innerHTML = (t1 - t0).toFixed(4) + " ms";
+                document.getElementById("performanceResults").innerHTML = "Performance: " + (t1 - t0).toFixed(4) + " ms";
             }
 
             function downScripts(problem) {
@@ -197,7 +189,7 @@
 
                 //Create the links to the problems
                 var plnk = document.getElementById("problemLinks");
-                for(var i=1;i<=currentProblem;i++) {
+                for(var i=currentProblem;i>0;i--) {
                     var lnk = document.createElement("a");
                      lnk.addEventListener("click", function(){
                         problemLinkClicked(this);
