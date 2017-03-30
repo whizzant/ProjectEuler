@@ -32,48 +32,52 @@ var p11 = {
         var matrix = data.split(" ");
         var matrixLength = matrix.length;
 
-        var value = 0;
+        var maxValue = 0;
 
-        for(var i=0; i<matrixLength-1; i++) {
+        //for(var i=0; i<matrixLength-1; i++) {
 
-            var startIdx = i; //16 = last number when forward looking
-            var x = 0;
+            var startIdx = 19; //16 = last number when forward looking
+            var tmpValue = 0;
 
-
-            var h = [];
-            if (Math.ceil(startIdx / 19) == Math.ceil((startIdx + 3) / 19)) {
+            //get four adjacent values
+            var startRow = Math.floor(startIdx / 20);
+            var endRow = Math.floor((startIdx+3) / 20);
+            if(startRow == endRow) {
                 h = matrix.slice(startIdx, startIdx + 4);  //horizontal = j + 4
+                tmpValue = h.reduce(this.ProductOfArray);
+                if(tmpValue >= maxValue) maxValue = tmpValue;
             }
-            x = h.reduce(this.ProductOfArray);
-            //if(x > value) value = x;
 
 
 
             var v = [];
             var dp = [];
             var db = [];
-            for (var j = 0; j <= 3; j++) {
+            for (var j=3; j >0; j--) {
+                if(startIdx + (j*21) <= matrixLength) {
+                    dp.push(matrix[startIdx + (j * 21)]);   //diagonal+ = j + 21 + 21 + 21
+                } else {
+                    dp.push(0);
+                }
 
-                v.push(matrix[startIdx + (j * 20)]);     //vertical = j + 20 + 20 + 20
-                //x = v.reduce(this.ProductOfArray);
-                //if(x > value) value = x;
+                if(startIdx + (j*20) <= matrixLength) {
+                    v.push(matrix[startIdx + (j * 20)]);    //vertical = j + 20 + 20 + 20
+                } else {
+                    dp.push(0);
+                }
 
-                dp.push(matrix[startIdx + (j * 21)]);    //diagonal+ = j + 21 + 21 + 21
-                //x = dp.reduce(this.ProductOfArray);
-                //if(x > value) value = x;
-
-                db.push(matrix[startIdx - (j * 21)]);     //diagonal- = j - 21 - 21 - 21
-                //x = db.reduce(this.ProductOfArray);
-                //if(x > value) value = x;
-
+                if(startIdx + (j*19) <= matrixLength) {
+                    db.push(matrix[startIdx + (j * 19)]);   //diagonal- = j + 19 + 19 + 19
+                } else {
+                    db.push(0);
+                }
             }
-        }
 
-        result = value; //v.reduce(this.ProductOfArray);
+            return db;
 
-        return result;
+        return maxValue;
     },
     ProductOfArray: function(total, num) {
         return Number(total) * Number(num);
-    }
+    },
 };
