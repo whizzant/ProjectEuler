@@ -144,8 +144,10 @@
              }
              };
              */
-            var currentProblem = 14;
+            var currentProblem = 15;
+            var solvedProblems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14];
 
+            //todo: 11
 
             function Euler(problem) {
                 document.getElementById("title").innerHTML = problem.title;
@@ -187,16 +189,17 @@
             window.onload = function() {
                 downScripts("p" + currentProblem);
 
+
                 //Create the links to the problems
                 var plnk = document.getElementById("problemLinks");
-                for(var i=currentProblem;i>0;i--) {
+                for(var i=solvedProblems.length-1;i>=0;i--) {
                     var lnk = document.createElement("a");
                      lnk.addEventListener("click", function(){
                         problemLinkClicked(this);
                     });
                     if(i == currentProblem) lnk.className = "active";
-                    lnk.href = 'javascript:downScripts("p' + i + '");';
-                    lnk.innerHTML = i;
+                    lnk.href = 'javascript:downScripts("p' + solvedProblems[i] + '");';
+                    lnk.innerHTML = solvedProblems[i];
                     plnk.appendChild(lnk);
                 }
             }
